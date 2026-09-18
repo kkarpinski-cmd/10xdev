@@ -2,8 +2,8 @@
   "package": "@przeprogramowani/10x-cli",
   "version": "1.22.0",
   "manifestVersion": 3,
-  "lastApplied": "2026-09-18T11:47:24.009Z",
-  "lessonId": "m1l3",
+  "lastApplied": "2026-09-18T11:58:24.424Z",
+  "lessonId": "m1l4",
   "course": "10xdevs4",
   "tool": "cursor",
   "files": {
@@ -91,6 +91,14 @@
           "references/scaffold-merge.md": "33454bd846edf024d62bae30c8604ca26caafb391b08eaf4163d61e566d9f252",
           "references/verification-log-schema.md": "eaa89efa5fc4eaf3aa242f0b172757778dea44a42e3ac53e44057a828b40a458"
         }
+      },
+      "10x-agents-md": {
+        "files": [
+          "SKILL.md"
+        ],
+        "contentHashes": {
+          "SKILL.md": "1074ca498a1bcb362c00baa94a61c6aae7ac63b05cf45e40912fd6b462ba283f"
+        }
       }
     },
     "prompts": [],
@@ -162,6 +170,18 @@
             "references/refusal-protocol.md",
             "references/scaffold-merge.md",
             "references/verification-log-schema.md"
+          ]
+        }
+      },
+      "prompts": [],
+      "configs": []
+    },
+    "m1l4": {
+      "appliedAt": "2026-09-18T11:58:24.424Z",
+      "skills": {
+        "10x-agents-md": {
+          "files": [
+            "SKILL.md"
           ]
         }
       },
