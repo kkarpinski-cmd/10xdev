@@ -20,7 +20,7 @@ milestone_status: open
 
 ## Milestone
 
-**M-1: Pierwsza setlista z głosowania** — Status: open
+**M-1: First rehearsal setlist** — Status: open
 
 - **Intent:** Zespół przechodzi drogę od założenia zespołu do setlisty na próbę: wspólna pula, runda uruchomiona przez ownera, oceny wszystkich członków, top N według reguły zespołu, a utwory spoza setlisty zostają w puli.
 - **Source materials:** `context/foundation/prd.md` (v1)
@@ -75,7 +75,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 
 ## Foundations
 
-### F-01: Aplikacja osiągalna dla drugiego członka
+### F-01: App reachable for a second member
 
 - **Outcome:** (foundation) drugi członek może otworzyć aplikację pod stałym adresem
 - **Change ID:** first-workers-deploy
@@ -91,7 +91,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 
 ## Slices
 
-### S-01: Założenie zespołu
+### S-01: Create a band
 
 - **Outcome:** użytkownik może utworzyć zespół i zostaje jego ownerem
 - **Change ID:** owner-creates-band
@@ -103,7 +103,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Risk:** Rejestracja i logowanie są już w stanie bazowym, więc ten przekrój ich nie buduje od nowa. Granica członkostwa powstaje razem z zespołem, bo pula i głosy mają być widoczne tylko dla członków.
 - **Status:** ready
 
-### S-02: Dołączenie linkiem zaproszenia
+### S-02: Join by invite link
 
 - **Outcome:** użytkownik może dołączyć do zespołu przez link zaproszenia
 - **Change ID:** join-band-by-invite
@@ -115,7 +115,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Risk:** Drugi członek musi mieć jak wejść, zanim runda sprawdzi głosowanie więcej niż jednej osoby.
 - **Status:** proposed
 
-### S-03: Dodanie utworu do puli
+### S-03: Add a song to the pool
 
 - **Outcome:** członek może dodać utwór do puli zespołu i ją zobaczyć
 - **Change ID:** add-song-to-pool
@@ -127,7 +127,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Risk:** Pula musi istnieć, zanim owner wylosuje utwory. Wspólna lista jest pierwszym miejscem, gdzie widać, że utwory zespołu widzą tylko członkowie.
 - **Status:** proposed
 
-### S-04: Reguła wielkości setlisty
+### S-04: Setlist size rule
 
 - **Outcome:** owner może ustawić, ile utworów z rundy wchodzi na setlistę
 - **Change ID:** owner-sets-setlist-size
@@ -139,7 +139,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Risk:** Reguła nie jest potrzebna, żeby uruchomić rundę, więc może powstawać równolegle z pulą i ocenami. Setlista nie może się zamknąć bez niej.
 - **Status:** proposed
 
-### S-05: Start rundy głosowania
+### S-05: Start a voting round
 
 - **Outcome:** owner może uruchomić rundę głosowania, a członkowie widzą w aplikacji powiadomienie o starcie
 - **Change ID:** owner-starts-voting-round
@@ -152,7 +152,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Risk:** Runda startuje dopiero gdy da się zaprosić drugą osobę i w puli są utwory. Wcześniej „głos wszystkich” niczego nie sprawdza. Powiadomienie w aplikacji pojawia się tutaj po raz pierwszy.
 - **Status:** proposed
 
-### S-06: Ocenianie utworów w rundzie
+### S-06: Rate songs in a round
 
 - **Outcome:** członek, w tym owner, może ocenić każdy wylosowany utwór w skali 1–5, po kolei
 - **Change ID:** member-rates-round-songs
@@ -164,7 +164,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Risk:** Oceny są ostatnim wkładem użytkownika przed setlistą. Wynik nie powstaje, dopóki nie zagłosują wszyscy członkowie rundy.
 - **Status:** proposed
 
-### S-07: Setlista na próbę
+### S-07: Rehearsal setlist
 
 - **Outcome:** użytkownik może zobaczyć setlistę na próbę po głosach wszystkich; utwory spoza niej zostają w puli, a członkowie dostają powiadomienie z wynikiem
 - **Change ID:** rehearsal-setlist-from-votes
@@ -179,16 +179,19 @@ Foundations below assume these are present and do NOT re-scaffold them.
 
 ## Backlog Handoff
 
-| Roadmap ID | Change ID                    | Suggested issue title                                              | Ready for `/10x-plan` | Notes                                                                 |
-| ---------- | ---------------------------- | ------------------------------------------------------------------ | --------------------- | --------------------------------------------------------------------- |
-| F-01       | first-workers-deploy         | Udostępnić aplikację pod adresem, który otworzy drugi członek     | yes                   | Plan tej zmiany już jest. Dokończyć wykonanie, nie pisać drugiego planu. |
-| S-01       | owner-creates-band           | Założenie zespołu przez zalogowanego użytkownika                  | yes                   | —                                                                     |
-| S-02       | join-band-by-invite          | Dołączenie do zespołu linkiem zaproszenia                         | no                    | Czeka na S-01.                                                        |
-| S-03       | add-song-to-pool             | Dodanie utworu do puli zespołu                                    | no                    | Czeka na S-01.                                                        |
-| S-04       | owner-sets-setlist-size      | Ustawienie, ile utworów z rundy wchodzi na setlistę               | no                    | Czeka na S-01. Może iść równolegle z S-02 i S-03.                     |
-| S-05       | owner-starts-voting-round    | Uruchomienie rundy głosowania i powiadomienie w aplikacji         | no                    | Czeka na S-02 i S-03.                                                 |
-| S-06       | member-rates-round-songs     | Ocena wylosowanych utworów w skali 1–5                            | no                    | Czeka na S-05.                                                        |
-| S-07       | rehearsal-setlist-from-votes | Setlista na próbę po głosach wszystkich członków                  | no                    | Czeka na S-04 i S-06.                                                 |
+GitHub milestone: [M-1: First rehearsal setlist](https://github.com/kkarpinski-cmd/10xdev/milestone/1)
+Linear project: [JamSet](https://linear.app/10xxxdev/project/jamset-fdfef5c27265) — milestone [M-1: First rehearsal setlist](https://linear.app/10xxxdev/project/jamset-fdfef5c27265)
+
+| Roadmap ID | Change ID                    | GitHub | Linear | Suggested issue title                                      | Ready for `/10x-plan` | Notes                                                                 |
+| ---------- | ---------------------------- | ------ | ------ | ---------------------------------------------------------- | --------------------- | --------------------------------------------------------------------- |
+| F-01       | first-workers-deploy         | #1     | 10X-7  | Publish the app at an address a second member can open    | yes                   | Plan tej zmiany już jest. Dokończyć wykonanie, nie pisać drugiego planu. |
+| S-01       | owner-creates-band           | #2     | 10X-6  | Signed-in user creates a band                             | yes                   | —                                                                     |
+| S-02       | join-band-by-invite          | #3     | 10X-8  | Join a band with an invite link                           | no                    | Czeka na S-01.                                                        |
+| S-03       | add-song-to-pool             | #4     | 10X-5  | Add a song to the band pool                               | no                    | Czeka na S-01.                                                        |
+| S-04       | owner-sets-setlist-size      | #5     | 10X-9  | Set how many songs from a round make the setlist          | no                    | Czeka na S-01. Może iść równolegle z S-02 i S-03.                     |
+| S-05       | owner-starts-voting-round    | #6     | 10X-10 | Start a voting round and notify in the app                | no                    | Czeka na S-02 i S-03.                                                 |
+| S-06       | member-rates-round-songs     | #7     | 10X-11 | Rate drawn songs on a 1–5 scale                           | no                    | Czeka na S-05.                                                        |
+| S-07       | rehearsal-setlist-from-votes | #8     | 10X-12 | Rehearsal setlist after every member has voted            | no                    | Czeka na S-04 i S-06.                                                 |
 
 ## Open Roadmap Questions
 
