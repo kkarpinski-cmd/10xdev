@@ -274,14 +274,14 @@ The migration only adds tables, an index, policies, and a function. `supabase/se
 
 #### Automated
 
-- [ ] 1.1 `npx supabase db reset` exits 0 and applies `*_create_bands.sql`
+- [x] 1.1 `npx supabase db reset` exits 0 and applies `*_create_bands.sql`
 
 #### Manual
 
-- [ ] 1.2 An authenticated direct insert into `bands` or `band_members` is rejected
-- [ ] 1.3 `create_band('Night Shift')` inserts one `bands` row and one `band_members` row with role `owner` for the caller
-- [ ] 1.4 A second user selecting that band gets zero rows
-- [ ] 1.5 The creating user, authenticated with their JWT, selects that band and their `band_members` row with role `owner`
+- [x] 1.2 An authenticated direct insert into `bands` or `band_members` is rejected
+- [x] 1.3 `create_band('Night Shift')` inserts one `bands` row and one `band_members` row with role `owner` for the caller
+- [x] 1.4 A second user selecting that band gets zero rows
+- [x] 1.5 The creating user, authenticated with their JWT, selects that band and their `band_members` row with role `owner`
 
 ### Phase 2: Create a band
 
