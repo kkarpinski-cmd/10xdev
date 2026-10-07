@@ -1,0 +1,1 @@
+-- No seed rows. This file exists because supabase/config.toml loads ./seed.sql after migrations.
