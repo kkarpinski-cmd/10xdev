@@ -1,0 +1,54 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { getMyBand } from "@/lib/services/bands";
+import { createClient } from "@/lib/supabase";
+
+const bandId = Astro.params.id;
+const supabase = createClient(Astro.request.headers, Astro.cookies);
+
+let band: Awaited<ReturnType<typeof getMyBand>> = null;
+if (bandId && supabase) {
+  band = await getMyBand(supabase, bandId);
+}
+
+if (!band) {
+  Astro.response.status = 404;
+}
+
+const createdAt = band
+  ? new Intl.DateTimeFormat("en", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      second: "2-digit",
+    }).format(new Date(band.createdAt))
+  : "";
+
+const roleLabel = band?.role === "owner" ? "Owner" : "Member";
+---
+
+<Layout title={band ? band.name : "Not found"}>
+  <div class="bg-cosmic flex min-h-screen items-center justify-center p-4">
+    {band ? (
+      <div class="w-full max-w-sm rounded-2xl border border-white/10 bg-white/10 p-8 text-center text-white backdrop-blur-xl">
+        <h1 class="mb-2 bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-3xl font-bold text-transparent">
+          {band.name}
+        </h1>
+        <p class="text-blue-100/80">{roleLabel}</p>
+        <p class="mt-2 text-sm text-blue-100/50">
+          <time datetime={band.createdAt}>{createdAt}</time>
+        </p>
+        <a
+          href="/dashboard"
+          class="mt-6 inline-block text-sm text-purple-300 transition-colors hover:text-purple-100 hover:underline"
+        >
+          Dashboard
+        </a>
+      </div>
+    ) : (
+      <p class="text-white">Not found</p>
+    )}
+  </div>
+</Layout>

@@ -79,6 +79,10 @@ const scriptsConfig = defineConfig({
 
 export default defineConfig(
   includeIgnoreFile(gitignorePath),
+  {
+    // Course skill scripts are not part of the app TypeScript project.
+    ignores: [".cursor/**"],
+  },
   baseConfig,
   reactConfig,
   eslintPluginAstro.configs["flat/recommended"],

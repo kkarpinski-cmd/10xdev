@@ -274,28 +274,28 @@ The migration only adds tables, an index, policies, and a function. `supabase/se
 
 #### Automated
 
-- [x] 1.1 `npx supabase db reset` exits 0 and applies `*_create_bands.sql`
+- [x] 1.1 `npx supabase db reset` exits 0 and applies `*_create_bands.sql` — 4af2246
 
 #### Manual
 
-- [x] 1.2 An authenticated direct insert into `bands` or `band_members` is rejected
-- [x] 1.3 `create_band('Night Shift')` inserts one `bands` row and one `band_members` row with role `owner` for the caller
-- [x] 1.4 A second user selecting that band gets zero rows
-- [x] 1.5 The creating user, authenticated with their JWT, selects that band and their `band_members` row with role `owner`
+- [x] 1.2 An authenticated direct insert into `bands` or `band_members` is rejected — 4af2246
+- [x] 1.3 `create_band('Night Shift')` inserts one `bands` row and one `band_members` row with role `owner` for the caller — 4af2246
+- [x] 1.4 A second user selecting that band gets zero rows — 4af2246
+- [x] 1.5 The creating user, authenticated with their JWT, selects that band and their `band_members` row with role `owner` — 4af2246
 
 ### Phase 2: Create a band
 
 #### Automated
 
-- [ ] 2.1 `npm run lint` exits 0
-- [ ] 2.2 `npx astro check` exits 0
-- [ ] 2.3 `npm run build` exits 0 with `SUPABASE_URL` and `SUPABASE_KEY` set
+- [x] 2.1 `npm run lint` exits 0
+- [x] 2.2 `npx astro check` exits 0
+- [x] 2.3 `npm run build` exits 0 with `SUPABASE_URL` and `SUPABASE_KEY` set
 
 #### Manual
 
-- [ ] 2.4 A signed-in user submits Night Shift and lands on a page showing that name and Owner
-- [ ] 2.5 Submitting a blank name, a whitespace-only name, or an 81-character name creates no band and shows an error on the dashboard
-- [ ] 2.6 Signed-out GET `/bands/<id>` and POST `/api/bands` redirect to `/auth/signin`
+- [x] 2.4 A signed-in user submits Night Shift and lands on a page showing that name and Owner
+- [x] 2.5 Submitting a blank name, a whitespace-only name, or an 81-character name creates no band and shows an error on the dashboard
+- [x] 2.6 Signed-out GET `/bands/<id>` and POST `/api/bands` redirect to `/auth/signin`
 
 ### Phase 3: Many bands on the dashboard
 
