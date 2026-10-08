@@ -3,7 +3,7 @@ project: JamSet
 version: 1
 status: draft
 created: 2026-10-04
-updated: 2026-10-07
+updated: 2026-10-08
 prd_version: 1
 main_goal: speed
 top_blocker: time
@@ -42,7 +42,7 @@ Małe zespoły przed jamem albo próbą nie mają jednego miejsca na utwory — 
 | ID   | Change ID                    | Outcome (user can …)                                                                                                      | Prerequisites | PRD refs                                       | Status   |
 | ---- | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ------------- | ---------------------------------------------- | -------- |
 | F-01 | first-workers-deploy         | (foundation) drugi członek może otworzyć aplikację pod stałym adresem                                                    | —             | US-01                                          | done     |
-| S-01 | owner-creates-band           | użytkownik może utworzyć zespół i zostaje jego ownerem                                                                   | —             | US-01, FR-001, FR-002                          | in-progress |
+| S-01 | owner-creates-band           | użytkownik może utworzyć zespół i zostaje jego ownerem                                                                   | —             | US-01, FR-001, FR-002                          | done |
 | S-02 | join-band-by-invite          | użytkownik może dołączyć do zespołu przez link zaproszenia                                                               | S-01          | US-01, FR-003                                  | proposed |
 | S-03 | add-song-to-pool             | członek może dodać utwór do puli zespołu i ją zobaczyć                                                                   | S-01          | US-01, FR-004                                  | proposed |
 | S-04 | owner-sets-setlist-size      | owner może ustawić, ile utworów z rundy wchodzi na setlistę                                                              | S-01          | US-01, FR-011                                  | proposed |
@@ -101,7 +101,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Rejestracja i logowanie są już w stanie bazowym, więc ten przekrój ich nie buduje od nowa. Granica członkostwa powstaje razem z zespołem, bo pula i głosy mają być widoczne tylko dla członków.
-- **Status:** in-progress
+- **Status:** done
 
 ### S-02: Join by invite link
 
@@ -210,3 +210,4 @@ Brak. Wersja PRD nie zawiera otwartych pytań, a ten przebieg nie dodał pytania
 ## Done
 
 - **F-01: (foundation) drugi członek może otworzyć aplikację pod stałym adresem** — Done 2026-10-04. Live at https://jam-set.k-karpinski.workers.dev/. Lesson: —.
+- **S-01: użytkownik może utworzyć zespół i zostaje jego ownerem** — Archived 2026-10-08 → `context/archive/2026-10-04-owner-creates-band/`. Lesson: —.

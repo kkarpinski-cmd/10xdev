@@ -1,10 +1,10 @@
 ---
 change_id: owner-creates-band
 title: Owner creates band
-status: implemented
+status: archived
 created: 2026-10-04
 updated: 2026-10-08
-archived_at: null
+archived_at: 2026-10-08T20:26:36Z
 ---
 
 ## Notes
