@@ -1,27 +1,55 @@
 ---
+import CreateBandForm from "@/components/bands/CreateBandForm";
 import Layout from "@/layouts/Layout.astro";
+import { listMyBands } from "@/lib/services/bands";
+import { createClient } from "@/lib/supabase";
 
-const { user } = Astro.locals;
+const error = Astro.url.searchParams.get("error");
+const supabase = createClient(Astro.request.headers, Astro.cookies);
+
+let bands: Awaited<ReturnType<typeof listMyBands>> = [];
+if (supabase) {
+  bands = await listMyBands(supabase);
+}
+
+const formatCreatedAt = new Intl.DateTimeFormat("en", {
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+  hour: "numeric",
+  minute: "2-digit",
+  second: "2-digit",
+});
 ---
 
 <Layout title="Dashboard">
   <div class="bg-cosmic flex min-h-screen items-center justify-center p-4">
-    <div class="rounded-2xl border border-white/10 bg-white/10 p-8 text-center text-white backdrop-blur-xl">
-      <h1 class="mb-4 bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-3xl font-bold text-transparent">
-        Dashboard
+    <div class="w-full max-w-sm rounded-2xl border border-white/10 bg-white/10 p-8 text-white backdrop-blur-xl">
+      {bands.length === 0 ? (
+        <p class="mb-6 text-center text-blue-100/80">You have no bands yet</p>
+      ) : (
+        <ul class="mb-6 flex flex-col gap-3 text-left">
+          {bands.map((band) => (
+            <li>
+              <a
+                href={`/bands/${band.id}`}
+                class="block rounded-xl border border-white/10 bg-white/5 px-4 py-3 transition-colors hover:bg-white/10"
+              >
+                <p class="font-medium">{band.name}</p>
+                {band.role === "owner" && <p class="text-sm text-blue-100/80">Owner</p>}
+                <p class="mt-1 text-sm text-blue-100/50">
+                  <time datetime={band.createdAt}>{formatCreatedAt.format(new Date(band.createdAt))}</time>
+                </p>
+                <p class="mt-1 text-xs text-blue-100/50">{band.id.slice(0, 8)}</p>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+      <h1 class="mb-6 bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-center text-2xl font-bold text-transparent">
+        Create a band
       </h1>
-      <p class="text-blue-100/80">
-        Welcome, <span class="font-semibold text-white">{user?.email}</span>
-      </p>
-      <p class="mt-2 text-sm text-blue-100/50">This page is only for authenticated users.</p>
-      <form method="POST" action="/api/auth/signout" class="mt-6">
-        <button
-          type="submit"
-          class="rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-sm transition-colors hover:bg-white/20"
-        >
-          Sign out
-        </button>
-      </form>
+      <CreateBandForm serverError={error} client:load />
     </div>
   </div>
 </Layout>
