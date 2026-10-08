@@ -287,23 +287,23 @@ The migration only adds tables, an index, policies, and a function. `supabase/se
 
 #### Automated
 
-- [x] 2.1 `npm run lint` exits 0
-- [x] 2.2 `npx astro check` exits 0
-- [x] 2.3 `npm run build` exits 0 with `SUPABASE_URL` and `SUPABASE_KEY` set
+- [x] 2.1 `npm run lint` exits 0 — d8cae9c
+- [x] 2.2 `npx astro check` exits 0 — d8cae9c
+- [x] 2.3 `npm run build` exits 0 with `SUPABASE_URL` and `SUPABASE_KEY` set — d8cae9c
 
 #### Manual
 
-- [x] 2.4 A signed-in user submits Night Shift and lands on a page showing that name and Owner
-- [x] 2.5 Submitting a blank name, a whitespace-only name, or an 81-character name creates no band and shows an error on the dashboard
-- [x] 2.6 Signed-out GET `/bands/<id>` and POST `/api/bands` redirect to `/auth/signin`
+- [x] 2.4 A signed-in user submits Night Shift and lands on a page showing that name and Owner — d8cae9c
+- [x] 2.5 Submitting a blank name, a whitespace-only name, or an 81-character name creates no band and shows an error on the dashboard — d8cae9c
+- [x] 2.6 Signed-out GET `/bands/<id>` and POST `/api/bands` redirect to `/auth/signin` — d8cae9c
 
 ### Phase 3: Many bands on the dashboard
 
 #### Automated
 
-- [ ] 3.1 `BASE_URL=http://localhost:4321 npm run smoke` passes, including two Night Shift creates that redirect to different `/bands/<id>` URLs
+- [x] 3.1 `BASE_URL=http://localhost:4321 npm run smoke` passes, including two Night Shift creates that redirect to different `/bands/<id>` URLs
 
 #### Manual
 
-- [ ] 3.2 The dashboard lists both Night Shift bands, earlier creation time first, id breaking a tie, each with Owner, a creation time that includes seconds, and the first 8 characters of the band id
-- [ ] 3.3 Bob's Night Shift does not appear on Anna's dashboard
+- [x] 3.2 The dashboard lists both Night Shift bands, earlier creation time first, id breaking a tie, each with Owner, a creation time that includes seconds, and the first 8 characters of the band id
+- [x] 3.3 Bob's Night Shift does not appear on Anna's dashboard

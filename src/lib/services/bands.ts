@@ -44,7 +44,15 @@ interface Database {
           role?: string;
           created_at?: string;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "band_members_band_id_fkey";
+            columns: ["band_id"];
+            isOneToOne: false;
+            referencedRelation: "bands";
+            referencedColumns: ["id"];
+          },
+        ];
       };
     };
     Views: Record<string, never>;
@@ -115,4 +123,52 @@ export async function getMyBand(supabase: ServerSupabase, bandId: string): Promi
     createdAt: createdAt.toISOString(),
     role: membership.role,
   };
+}
+
+export async function listMyBands(supabase: ServerSupabase): Promise<(Band & { role: BandRole })[]> {
+  const { data, error } = await databaseClient(supabase)
+    .from("band_members")
+    .select("role, bands(id, name, created_at)");
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  const bands: (Band & { role: BandRole })[] = [];
+  for (const row of data) {
+    const band = row.bands;
+    if (!isBandRole(row.role)) {
+      continue;
+    }
+
+    const createdAt = new Date(band.created_at);
+    if (Number.isNaN(createdAt.getTime())) {
+      continue;
+    }
+
+    bands.push({
+      id: band.id,
+      name: band.name,
+      createdAt: createdAt.toISOString(),
+      role: row.role,
+    });
+  }
+
+  bands.sort((left, right) => {
+    if (left.createdAt < right.createdAt) {
+      return -1;
+    }
+    if (left.createdAt > right.createdAt) {
+      return 1;
+    }
+    if (left.id < right.id) {
+      return -1;
+    }
+    if (left.id > right.id) {
+      return 1;
+    }
+    return 0;
+  });
+
+  return bands;
 }
