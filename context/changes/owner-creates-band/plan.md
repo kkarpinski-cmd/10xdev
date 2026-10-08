@@ -301,9 +301,9 @@ The migration only adds tables, an index, policies, and a function. `supabase/se
 
 #### Automated
 
-- [x] 3.1 `BASE_URL=http://localhost:4321 npm run smoke` passes, including two Night Shift creates that redirect to different `/bands/<id>` URLs
+- [x] 3.1 `BASE_URL=http://localhost:4321 npm run smoke` passes, including two Night Shift creates that redirect to different `/bands/<id>` URLs — a574cb8
 
 #### Manual
 
-- [x] 3.2 The dashboard lists both Night Shift bands, earlier creation time first, id breaking a tie, each with Owner, a creation time that includes seconds, and the first 8 characters of the band id
-- [x] 3.3 Bob's Night Shift does not appear on Anna's dashboard
+- [x] 3.2 The dashboard lists both Night Shift bands, earlier creation time first, id breaking a tie, each with Owner, a creation time that includes seconds, and the first 8 characters of the band id — a574cb8
+- [x] 3.3 Bob's Night Shift does not appear on Anna's dashboard — a574cb8
