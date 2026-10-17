@@ -265,13 +265,13 @@ No data migration. No new environment variable. No change to `PROTECTED_ROUTES`.
 
 #### Automated
 
-- [ ] 1.1 `npx astro check` passes after Card is added
-- [ ] 1.2 `npm run lint` passes after Card is added
-- [ ] 1.3 `src/components/ui/card.tsx` exists and includes `bg-card`
+- [x] 1.1 `npx astro check` passes after Card is added
+- [x] 1.2 `npm run lint` passes after Card is added
+- [x] 1.3 `src/components/ui/card.tsx` exists and includes `bg-card`
 
 #### Manual
 
-- [ ] 1.4 Card comes from the shadcn registry for the existing components.json, not a second hand-built card
+- [x] 1.4 Card comes from the shadcn registry for the existing components.json, not a second hand-built card
 
 ### Phase 2: Token values
 
