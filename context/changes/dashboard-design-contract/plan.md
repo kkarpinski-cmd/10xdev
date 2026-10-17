@@ -288,32 +288,32 @@ No data migration. No new environment variable. No change to `PROTECTED_ROUTES`.
 
 #### Automated
 
-- [x] 3.1 The 10x-ui palette scan returns no hits in src/pages/dashboard.astro, src/components/auth/FormField.tsx, src/components/auth/ServerError.tsx, and src/components/auth/SubmitButton.tsx
-- [x] 3.2 npx astro check passes
-- [x] 3.3 npm run lint passes
-- [x] 3.4 src/pages/dashboard.astro includes dark and does not include bg-cosmic
-- [x] 3.5 src/pages/auth/signin.astro and src/pages/auth/signup.astro include dark on the card
+- [x] 3.1 The 10x-ui palette scan returns no hits in src/pages/dashboard.astro, src/components/auth/FormField.tsx, src/components/auth/ServerError.tsx, and src/components/auth/SubmitButton.tsx — 7923bcc
+- [x] 3.2 npx astro check passes — 7923bcc
+- [x] 3.3 npm run lint passes — 7923bcc
+- [x] 3.4 src/pages/dashboard.astro includes dark and does not include bg-cosmic — 7923bcc
+- [x] 3.5 src/pages/auth/signin.astro and src/pages/auth/signup.astro include dark on the card — 7923bcc
 
 #### Manual
 
-- [x] 3.6 A signed-in dashboard shows the title Bands above the list and the create form below it
-- [x] 3.7 A band row shows the name, Owner when the role is owner, a creation time that includes seconds, the first 8 characters of the id, and links to /bands/<id>
-- [x] 3.8 An empty membership list shows the sentence You have no bands yet
-- [x] 3.9 Sign-in field text is readable on the cosmic card
-- [x] 3.10 A too-short band name shows Band name must be 1–80 characters next to the field
+- [x] 3.6 A signed-in dashboard shows the title Bands above the list and the create form below it — 7923bcc
+- [x] 3.7 A band row shows the name, Owner when the role is owner, a creation time that includes seconds, the first 8 characters of the id, and links to /bands/<id> — 7923bcc
+- [x] 3.8 An empty membership list shows the sentence You have no bands yet — 7923bcc
+- [x] 3.9 Sign-in field text is readable on the cosmic card — 7923bcc
+- [x] 3.10 A too-short band name shows Band name must be 1–80 characters next to the field — 7923bcc
 
 ### Phase 4: States and guardrail
 
 #### Automated
 
-- [ ] 4.1 node scripts/check-dashboard-tokens.mjs exits 0
-- [ ] 4.2 src/pages/dev/dashboard-states.astro exists and is not listed in PROTECTED_ROUTES
-- [ ] 4.3 npx astro check passes
-- [ ] 4.4 npm run lint passes
+- [x] 4.1 node scripts/check-dashboard-tokens.mjs exits 0
+- [x] 4.2 src/pages/dev/dashboard-states.astro exists and is not listed in PROTECTED_ROUTES
+- [x] 4.3 npx astro check passes
+- [x] 4.4 npm run lint passes
 
 #### Manual
 
-- [ ] 4.5 The kitchen sink shows default, hover, focus-visible, disabled, error, empty, and the submit pending label
-- [ ] 4.6 The same sink is checked at a desktop width and at one mobile width
-- [ ] 4.7 Keyboard focus on the band-name field and the submit button shows the ring token
-- [ ] 4.8 AGENTS.md UI section names the token file, src/components/ui, the shadcn add path, the ban on literal colors, and the kitchen sink path
+- [x] 4.5 The kitchen sink shows default, hover, focus-visible, disabled, error, empty, and the submit pending label
+- [x] 4.6 The same sink is checked at a desktop width and at one mobile width
+- [x] 4.7 Keyboard focus on the band-name field and the submit button shows the ring token
+- [x] 4.8 AGENTS.md UI section names the token file, src/components/ui, the shadcn add path, the ban on literal colors, and the kitchen sink path
