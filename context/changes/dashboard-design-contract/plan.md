@@ -306,14 +306,14 @@ No data migration. No new environment variable. No change to `PROTECTED_ROUTES`.
 
 #### Automated
 
-- [x] 4.1 node scripts/check-dashboard-tokens.mjs exits 0
-- [x] 4.2 src/pages/dev/dashboard-states.astro exists and is not listed in PROTECTED_ROUTES
-- [x] 4.3 npx astro check passes
-- [x] 4.4 npm run lint passes
+- [x] 4.1 node scripts/check-dashboard-tokens.mjs exits 0 — 8e00834
+- [x] 4.2 src/pages/dev/dashboard-states.astro exists and is not listed in PROTECTED_ROUTES — 8e00834
+- [x] 4.3 npx astro check passes — 8e00834
+- [x] 4.4 npm run lint passes — 8e00834
 
 #### Manual
 
-- [x] 4.5 The kitchen sink shows default, hover, focus-visible, disabled, error, empty, and the submit pending label
-- [x] 4.6 The same sink is checked at a desktop width and at one mobile width
-- [x] 4.7 Keyboard focus on the band-name field and the submit button shows the ring token
-- [x] 4.8 AGENTS.md UI section names the token file, src/components/ui, the shadcn add path, the ban on literal colors, and the kitchen sink path
+- [x] 4.5 The kitchen sink shows default, hover, focus-visible, disabled, error, empty, and the submit pending label — 8e00834
+- [x] 4.6 The same sink is checked at a desktop width and at one mobile width — 8e00834
+- [x] 4.7 Keyboard focus on the band-name field and the submit button shows the ring token — 8e00834
+- [x] 4.8 AGENTS.md UI section names the token file, src/components/ui, the shadcn add path, the ban on literal colors, and the kitchen sink path — 8e00834
