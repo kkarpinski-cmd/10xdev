@@ -277,30 +277,30 @@ No data migration. No new environment variable. No change to `PROTECTED_ROUTES`.
 
 #### Automated
 
-- [x] 2.1 context/changes/dashboard-design-contract/tokens.md names src/styles/global.css and the .dark roles background, foreground, card, card-foreground, muted-foreground, border, primary, primary-foreground, destructive, input, and ring
-- [x] 2.2 A grep of src/styles/global.css finds #0a0e1a and #0f1529 in the bg-cosmic utility and nowhere else in that file
+- [x] 2.1 context/changes/dashboard-design-contract/tokens.md names src/styles/global.css and the .dark roles background, foreground, card, card-foreground, muted-foreground, border, primary, primary-foreground, destructive, input, and ring — 7231785
+- [x] 2.2 A grep of src/styles/global.css finds #0a0e1a and #0f1529 in the bg-cosmic utility and nowhere else in that file — 7231785
 
 #### Manual
 
-- [x] 2.3 Each role listed in tokens.md matches a variable in the .dark block of src/styles/global.css
+- [x] 2.3 Each role listed in tokens.md matches a variable in the .dark block of src/styles/global.css — 7231785
 
 ### Phase 3: Dashboard view
 
 #### Automated
 
-- [ ] 3.1 The 10x-ui palette scan returns no hits in src/pages/dashboard.astro, src/components/auth/FormField.tsx, src/components/auth/ServerError.tsx, and src/components/auth/SubmitButton.tsx
-- [ ] 3.2 npx astro check passes
-- [ ] 3.3 npm run lint passes
-- [ ] 3.4 src/pages/dashboard.astro includes dark and does not include bg-cosmic
-- [ ] 3.5 src/pages/auth/signin.astro and src/pages/auth/signup.astro include dark on the card
+- [x] 3.1 The 10x-ui palette scan returns no hits in src/pages/dashboard.astro, src/components/auth/FormField.tsx, src/components/auth/ServerError.tsx, and src/components/auth/SubmitButton.tsx
+- [x] 3.2 npx astro check passes
+- [x] 3.3 npm run lint passes
+- [x] 3.4 src/pages/dashboard.astro includes dark and does not include bg-cosmic
+- [x] 3.5 src/pages/auth/signin.astro and src/pages/auth/signup.astro include dark on the card
 
 #### Manual
 
-- [ ] 3.6 A signed-in dashboard shows the title Bands above the list and the create form below it
-- [ ] 3.7 A band row shows the name, Owner when the role is owner, a creation time that includes seconds, the first 8 characters of the id, and links to /bands/<id>
-- [ ] 3.8 An empty membership list shows the sentence You have no bands yet
-- [ ] 3.9 Sign-in field text is readable on the cosmic card
-- [ ] 3.10 A too-short band name shows Band name must be 1–80 characters next to the field
+- [x] 3.6 A signed-in dashboard shows the title Bands above the list and the create form below it
+- [x] 3.7 A band row shows the name, Owner when the role is owner, a creation time that includes seconds, the first 8 characters of the id, and links to /bands/<id>
+- [x] 3.8 An empty membership list shows the sentence You have no bands yet
+- [x] 3.9 Sign-in field text is readable on the cosmic card
+- [x] 3.10 A too-short band name shows Band name must be 1–80 characters next to the field
 
 ### Phase 4: States and guardrail
 

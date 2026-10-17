@@ -1,5 +1,6 @@
 ---
 import CreateBandForm from "@/components/bands/CreateBandForm";
+import { Card } from "@/components/ui/card";
 import Layout from "@/layouts/Layout.astro";
 import { listMyBands } from "@/lib/services/bands";
 import { createClient } from "@/lib/supabase";
@@ -23,33 +24,37 @@ const formatCreatedAt = new Intl.DateTimeFormat("en", {
 ---
 
 <Layout title="Dashboard">
-  <div class="bg-cosmic flex min-h-screen items-center justify-center p-4">
-    <div class="w-full max-w-sm rounded-2xl border border-white/10 bg-white/10 p-8 text-white backdrop-blur-xl">
+  <div class="dark bg-background text-foreground min-h-screen">
+    <div class="mx-auto flex w-full max-w-lg flex-col gap-6 p-4">
+      <h1 class="text-2xl font-semibold">Bands</h1>
       {bands.length === 0 ? (
-        <p class="mb-6 text-center text-blue-100/80">You have no bands yet</p>
+        <p class="text-muted-foreground">You have no bands yet</p>
       ) : (
-        <ul class="mb-6 flex flex-col gap-3 text-left">
+        <ul class="flex flex-col gap-3">
           {bands.map((band) => (
             <li>
-              <a
-                href={`/bands/${band.id}`}
-                class="block rounded-xl border border-white/10 bg-white/5 px-4 py-3 transition-colors hover:bg-white/10"
-              >
-                <p class="font-medium">{band.name}</p>
-                {band.role === "owner" && <p class="text-sm text-blue-100/80">Owner</p>}
-                <p class="mt-1 text-sm text-blue-100/50">
-                  <time datetime={band.createdAt}>{formatCreatedAt.format(new Date(band.createdAt))}</time>
-                </p>
-                <p class="mt-1 text-xs text-blue-100/50">{band.id.slice(0, 8)}</p>
+              <a href={`/bands/${band.id}`} class="block">
+                <Card className="px-6 transition-colors hover:bg-accent">
+                  <div class="flex flex-col gap-1">
+                    <p class="font-medium">{band.name}</p>
+                    {band.role === "owner" && <p class="text-sm text-muted-foreground">Owner</p>}
+                    <p class="text-sm text-muted-foreground">
+                      <time datetime={band.createdAt}>{formatCreatedAt.format(new Date(band.createdAt))}</time>
+                    </p>
+                    <p class="text-xs text-muted-foreground">{band.id.slice(0, 8)}</p>
+                  </div>
+                </Card>
               </a>
             </li>
           ))}
         </ul>
       )}
-      <h1 class="mb-6 bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-center text-2xl font-bold text-transparent">
-        Create a band
-      </h1>
-      <CreateBandForm serverError={error} client:load />
+      <Card className="px-6">
+        <div class="flex flex-col gap-6">
+          <h2 class="text-lg font-semibold">Create a band</h2>
+          <CreateBandForm serverError={error} client:load />
+        </div>
+      </Card>
     </div>
   </div>
 </Layout>
