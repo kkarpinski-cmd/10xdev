@@ -36,3 +36,8 @@ No unit or e2e suite yet — only `npm run smoke`. Add application tests as JamS
 ## Commits & PRs
 
 Target branch: `master`. PRs must pass CI: `npm run lint`, `npx astro check`, `npm run build` (needs `SUPABASE_URL`/`SUPABASE_KEY` secrets), plus the smoke job. Use short imperative commit messages (see recent `git log`). Node.js v22.14.0 per @.nvmrc.
+
+## UI
+- Tokeny: src/styles/global.css (:root, .dark, @theme inline). Nowy kolor = nowy token, nigdy literał.
+- Komponenty: src/components/ui. Zanim napiszesz nowy, sprawdź ten katalog; brakujący dodaj z rejestru shadcn.
+
