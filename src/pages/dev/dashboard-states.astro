@@ -1,0 +1,158 @@
+---
+import { createElement } from "react";
+import { Music, Plus } from "lucide-react";
+import { FormField } from "@/components/auth/FormField";
+import { ServerError } from "@/components/auth/ServerError";
+import { SubmitButton } from "@/components/auth/SubmitButton";
+import { Card } from "@/components/ui/card";
+import Layout from "@/layouts/Layout.astro";
+
+const musicIcon = createElement(Music, { className: "size-4" });
+const plusIcon = createElement(Plus, { className: "size-4" });
+
+function noop(_value: string): void {
+  return undefined;
+}
+
+const bandNameError = "Band name must be 1–80 characters";
+
+const band: {
+  id: string;
+  name: string;
+  role: "owner" | "member";
+  createdAt: string;
+} = {
+  id: "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  name: "Night Shift",
+  role: "owner",
+  createdAt: "2026-04-12T15:04:05.000Z",
+};
+
+const formatCreatedAt = new Intl.DateTimeFormat("en", {
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+  hour: "numeric",
+  minute: "2-digit",
+  second: "2-digit",
+});
+---
+
+<Layout title="Dashboard states">
+  <div class="dark bg-background text-foreground min-h-screen">
+    <div class="mx-auto flex w-full max-w-lg flex-col gap-6 p-4">
+      <h1 class="text-2xl font-semibold">Dashboard states</h1>
+
+      <section class="flex flex-col gap-3">
+        <h2 class="text-sm font-medium text-muted-foreground">default</h2>
+        <ul class="flex flex-col gap-3">
+          <li>
+            <a href={`/bands/${band.id}`} class="block">
+              <Card className="px-6 transition-colors hover:bg-accent">
+                <div class="flex flex-col gap-1">
+                  <p class="font-medium">{band.name}</p>
+                  {band.role === "owner" && <p class="text-sm text-muted-foreground">Owner</p>}
+                  <p class="text-sm text-muted-foreground">
+                    <time datetime={band.createdAt}>{formatCreatedAt.format(new Date(band.createdAt))}</time>
+                  </p>
+                  <p class="text-xs text-muted-foreground">{band.id.slice(0, 8)}</p>
+                </div>
+              </Card>
+            </a>
+          </li>
+        </ul>
+      </section>
+
+      <section class="flex flex-col gap-3">
+        <h2 class="text-sm font-medium text-muted-foreground">hover</h2>
+        <ul class="flex flex-col gap-3">
+          <li>
+            <a href={`/bands/${band.id}`} class="block">
+              <Card className="bg-accent px-6 transition-colors">
+                <div class="flex flex-col gap-1">
+                  <p class="font-medium">{band.name}</p>
+                  {band.role === "owner" && <p class="text-sm text-muted-foreground">Owner</p>}
+                  <p class="text-sm text-muted-foreground">
+                    <time datetime={band.createdAt}>{formatCreatedAt.format(new Date(band.createdAt))}</time>
+                  </p>
+                  <p class="text-xs text-muted-foreground">{band.id.slice(0, 8)}</p>
+                </div>
+              </Card>
+            </a>
+          </li>
+        </ul>
+      </section>
+
+      <section class="flex flex-col gap-3">
+        <h2 class="text-sm font-medium text-muted-foreground">focus-visible</h2>
+        <Card className="px-6">
+          <form
+            class="flex flex-col gap-4 [&_button]:border-ring [&_button]:ring-2 [&_button]:ring-ring [&_input]:border-ring [&_input]:ring-2 [&_input]:ring-ring"
+            onsubmit="event.preventDefault()"
+          >
+            <FormField
+              id="focus-band-name"
+              label="Band name"
+              value="Night Shift"
+              onChange={noop}
+              placeholder="Night Shift"
+              icon={musicIcon}
+            />
+            <SubmitButton pendingText="Creating band..." icon={plusIcon}>
+              Create a band
+            </SubmitButton>
+          </form>
+        </Card>
+      </section>
+
+      <section class="flex flex-col gap-3">
+        <h2 class="text-sm font-medium text-muted-foreground">disabled</h2>
+        <Card className="px-6">
+          <form onsubmit="event.preventDefault()">
+            <SubmitButton pendingText="Creating band..." icon={plusIcon} disabled={true}>
+              Create a band
+            </SubmitButton>
+          </form>
+        </Card>
+      </section>
+
+      <section class="flex flex-col gap-3">
+        <h2 class="text-sm font-medium text-muted-foreground">error</h2>
+        <Card className="px-6">
+          <div class="flex flex-col gap-4">
+            <FormField
+              id="error-band-name"
+              label="Band name"
+              value=""
+              onChange={noop}
+              placeholder="Night Shift"
+              error={bandNameError}
+              icon={musicIcon}
+            />
+            <ServerError message={bandNameError} />
+          </div>
+        </Card>
+      </section>
+
+      <section class="flex flex-col gap-3">
+        <h2 class="text-sm font-medium text-muted-foreground">empty</h2>
+        <p class="text-muted-foreground">You have no bands yet</p>
+      </section>
+
+      <section class="flex flex-col gap-3">
+        <h2 class="text-sm font-medium text-muted-foreground">loading</h2>
+        <Card className="px-6">
+          <form onsubmit="event.preventDefault()">
+            <SubmitButton pendingText="Creating band..." icon={plusIcon} forcedPending={true}>
+              Create a band
+            </SubmitButton>
+          </form>
+        </Card>
+      </section>
+
+      <p class="text-sm text-muted-foreground">
+        List loading is N/A: the dashboard list is rendered on the server before HTML is sent.
+      </p>
+    </div>
+  </div>
+</Layout>
