@@ -265,24 +265,24 @@ No data migration. No new environment variable. No change to `PROTECTED_ROUTES`.
 
 #### Automated
 
-- [x] 1.1 `npx astro check` passes after Card is added
-- [x] 1.2 `npm run lint` passes after Card is added
-- [x] 1.3 `src/components/ui/card.tsx` exists and includes `bg-card`
+- [x] 1.1 `npx astro check` passes after Card is added — 9c4a441
+- [x] 1.2 `npm run lint` passes after Card is added — 9c4a441
+- [x] 1.3 `src/components/ui/card.tsx` exists and includes `bg-card` — 9c4a441
 
 #### Manual
 
-- [x] 1.4 Card comes from the shadcn registry for the existing components.json, not a second hand-built card
+- [x] 1.4 Card comes from the shadcn registry for the existing components.json, not a second hand-built card — 9c4a441
 
 ### Phase 2: Token values
 
 #### Automated
 
-- [ ] 2.1 context/changes/dashboard-design-contract/tokens.md names src/styles/global.css and the .dark roles background, foreground, card, card-foreground, muted-foreground, border, primary, primary-foreground, destructive, input, and ring
-- [ ] 2.2 A grep of src/styles/global.css finds #0a0e1a and #0f1529 in the bg-cosmic utility and nowhere else in that file
+- [x] 2.1 context/changes/dashboard-design-contract/tokens.md names src/styles/global.css and the .dark roles background, foreground, card, card-foreground, muted-foreground, border, primary, primary-foreground, destructive, input, and ring
+- [x] 2.2 A grep of src/styles/global.css finds #0a0e1a and #0f1529 in the bg-cosmic utility and nowhere else in that file
 
 #### Manual
 
-- [ ] 2.3 Each role listed in tokens.md matches a variable in the .dark block of src/styles/global.css
+- [x] 2.3 Each role listed in tokens.md matches a variable in the .dark block of src/styles/global.css
 
 ### Phase 3: Dashboard view
 
