@@ -88,7 +88,7 @@ const formatCreatedAt = new Intl.DateTimeFormat("en", {
         <Card className="px-6">
           <form
             class="flex flex-col gap-4 [&_button]:border-ring [&_button]:ring-2 [&_button]:ring-ring [&_input]:border-ring [&_input]:ring-2 [&_input]:ring-ring"
-            onsubmit="return false"
+            onsubmit="event.preventDefault()"
           >
             <FormField
               id="focus-band-name"
@@ -108,7 +108,7 @@ const formatCreatedAt = new Intl.DateTimeFormat("en", {
       <section class="flex flex-col gap-3">
         <h2 class="text-sm font-medium text-muted-foreground">disabled</h2>
         <Card className="px-6">
-          <form onsubmit="return false">
+          <form onsubmit="event.preventDefault()">
             <SubmitButton pendingText="Creating band..." icon={plusIcon} disabled={true}>
               Create a band
             </SubmitButton>
@@ -142,7 +142,7 @@ const formatCreatedAt = new Intl.DateTimeFormat("en", {
       <section class="flex flex-col gap-3">
         <h2 class="text-sm font-medium text-muted-foreground">loading</h2>
         <Card className="px-6">
-          <form onsubmit="return false">
+          <form onsubmit="event.preventDefault()">
             <SubmitButton pendingText="Creating band..." icon={plusIcon} forcedPending={true}>
               Create a band
             </SubmitButton>
