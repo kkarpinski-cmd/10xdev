@@ -259,12 +259,12 @@ No schema change. Tests create their own users and bands on each run. They do no
 
 #### Automated
 
-- [ ] 1.1 `npm test` exits 0 against local Supabase and fails if user B's list or id lookup returns user A's band id
-- [ ] 1.2 `npm run lint` exits 0
+- [x] 1.1 `npm test` exits 0 against local Supabase and fails if user B's list or id lookup returns user A's band id
+- [x] 1.2 `npm run lint` exits 0
 
 #### Manual
 
-- [ ] 1.3 Local Supabase is running with this migration, and `SUPABASE_URL` / `SUPABASE_KEY` are that stack's API URL and anon key, before `npm test`
+- [x] 1.3 Local Supabase is running with this migration, and `SUPABASE_URL` / `SUPABASE_KEY` are that stack's API URL and anon key, before `npm test`
 
 ### Phase 2: Rejected owner write and rejected name
 
