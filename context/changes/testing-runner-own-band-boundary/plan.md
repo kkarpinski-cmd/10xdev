@@ -259,24 +259,24 @@ No schema change. Tests create their own users and bands on each run. They do no
 
 #### Automated
 
-- [x] 1.1 `npm test` exits 0 against local Supabase and fails if user B's list or id lookup returns user A's band id
-- [x] 1.2 `npm run lint` exits 0
+- [x] 1.1 `npm test` exits 0 against local Supabase and fails if user B's list or id lookup returns user A's band id — a9955f2
+- [x] 1.2 `npm run lint` exits 0 — a9955f2
 
 #### Manual
 
-- [x] 1.3 Local Supabase is running with this migration, and `SUPABASE_URL` / `SUPABASE_KEY` are that stack's API URL and anon key, before `npm test`
+- [x] 1.3 Local Supabase is running with this migration, and `SUPABASE_URL` / `SUPABASE_KEY` are that stack's API URL and anon key, before `npm test` — a9955f2
 
 ### Phase 2: Rejected owner write and rejected name
 
 #### Automated
 
-- [ ] 2.1 `npm test` exits 0 and fails if B's insert or update lets B read A's band or changes A's visible role away from owner
-- [ ] 2.2 `npm test` exits 0 and fails unless empty, three-space, and 81-`a` names throw a message containing `Band name must be 1–80 characters`, while `A` and an 80-`b` name return ids
-- [ ] 2.3 `npm run lint` exits 0
+- [x] 2.1 `npm test` exits 0 and fails if B's insert or update lets B read A's band or changes A's visible role away from owner
+- [x] 2.2 `npm test` exits 0 and fails unless empty, three-space, and 81-`a` names throw a message containing `Band name must be 1–80 characters`, while `A` and an 80-`b` name return ids
+- [x] 2.3 `npm run lint` exits 0
 
 #### Manual
 
-- [ ] 2.4 Re-run `npm test` with the same local Supabase as Phase 1 and confirm both new cases ran, not only the Phase 1 file
+- [x] 2.4 Re-run `npm test` with the same local Supabase as Phase 1 and confirm both new cases ran, not only the Phase 1 file
 
 ### Phase 3: HTTP mapping
 
