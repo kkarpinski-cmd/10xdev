@@ -1,6 +1,6 @@
 import { getViteConfig } from "astro/config";
 import "vitest/config";
-import type { PluginOption } from "vite";
+import { loadEnv, type PluginOption } from "vite";
 
 const astroViteConfig = getViteConfig({
   test: {
@@ -40,10 +40,26 @@ function withoutCloudflarePlugins(plugins: PluginOption[] | undefined): PluginOp
   return kept;
 }
 
+function envFromFiles(mode: string): Record<string, string> {
+  const fromFile = loadEnv(mode, process.cwd(), "");
+  const merged: Record<string, string> = { ...fromFile };
+  for (const key of Object.keys(fromFile)) {
+    const current = process.env[key];
+    if (current) {
+      merged[key] = current;
+    }
+  }
+  return merged;
+}
+
 export default async (env: Parameters<typeof astroViteConfig>[0]) => {
   const config = await astroViteConfig(env);
   return {
     ...config,
+    test: {
+      ...config.test,
+      env: envFromFiles(env.mode),
+    },
     plugins: withoutCloudflarePlugins(config.plugins),
   };
 };

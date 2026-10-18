@@ -29,18 +29,21 @@ There is no Vitest config. `scripts/smoke.mjs` uses one email and one cookie jar
 - Song, pool, voting-round, or setlist tests. Those objects are not in the inspected trees.
 - A test of the React form, `preventDefault`, or a visual snapshot.
 - `@cloudflare/vitest-plugin`.
-- Hosted Supabase, a service-role client, or a non-UUID band id.
+- Hosted Supabase, or a service-role client used to read or write the rows under test. Phase 5 may use the local service role only to delete rows that run created.
+- A non-UUID band id.
+- A mock of `listMyBands`, `getMyBand`, or `createBand`. A stub stays green if the SELECT policies are removed.
 - Edits to test-plan §1–§5. §3 status stays with `/10x-test-plan`.
 - A `member` role. The product path that creates one is a later slice.
 - Rewriting `listMyBands` or `createClient` so they accept a mock.
 
 ## Implementation Approach
 
-Vitest is configured with Astro `getViteConfig()`. Data tests sign up two users with `@supabase/supabase-js` against `SUPABASE_URL` and `SUPABASE_KEY` (the anon key) and call `listMyBands`, `getMyBand`, and `createBand`. `npm test` does not start Supabase and does not run the HTTP file. `npm run test:http` performs the cookie requests, in the shape of `scripts/smoke.mjs`, against `BASE_URL`. The oracle for a refused write is visible state: B cannot read A's band, and A's visible role stays `owner`. The oracle for a refused name is a thrown message that contains `Band name must be 1–80 characters`, plus no new id.
+Vitest is configured with Astro `getViteConfig()`. Data tests sign up two users with `@supabase/supabase-js` against `SUPABASE_URL` and `SUPABASE_KEY` (the local anon key) and call `listMyBands`, `getMyBand`, and `createBand`. `npm test` does not start Supabase, does not read `.dev.vars`, and does not run the HTTP file. After the assertions, the run deletes the memberships, bands, and auth users it created. `npm run test:http` performs the cookie requests, in the shape of `scripts/smoke.mjs`, against `BASE_URL`. The oracle for a refused write is visible state: B cannot read A's band, and A's visible role stays `owner`. The oracle for a refused name is a thrown message that contains `Band name must be 1–80 characters`, plus no new id.
 
 ## Critical Implementation Details
 
-- Use the authenticated user JWT. A service-role client bypasses the policies this suite exists to catch, and `create_band` is revoked from `service_role`.
+- Use the authenticated user JWT for every assertion. A service-role client bypasses the policies this suite exists to catch, and `create_band` is revoked from `service_role`. The user JWT also cannot delete: `bands_delete_denied` and `band_members_delete_denied` use `false`, and `band_members.user_id` references `auth.users` with no `ON DELETE CASCADE`.
+- Teardown is a separate client. It uses `SUPABASE_SERVICE_ROLE_KEY` on the same local `SUPABASE_URL`, and only to delete `band_members`, then `bands`, then those auth users. It is not passed to `listMyBands`, `getMyBand`, or `createBand`.
 - `npm test` excludes `test/band-http.test.ts`. `npm run test:http` runs that file with the exclude overridden. A plain `vitest run test/band-http.test.ts` still honors the config exclude unless the script overrides it.
 - Create A's band before B reads it. Give B a band of their own before asserting absence, so an empty list cannot satisfy the read test. Assert on band id.
 - The name cases must call `createBand` or `create_band`, not the React `validate` function.
@@ -218,6 +221,45 @@ Record how to add the next test of this kind. Leave the frozen strategy sections
 
 ---
 
+## Phase 5: Remove rows this run created
+
+### Overview
+
+The data tests already use local Supabase. They leave every signed-up user and band in that database. Remove those rows after the assertions. Do not replace the sessions with a mock.
+
+### Changes Required:
+
+#### 1. Teardown
+
+**File**: `test/own-band-read.test.ts`, `test/rejected-band-write.test.ts`, `test/band-http.test.ts`
+
+**Intent**: After each test, the local database no longer has the auth users, memberships, or bands that test created. The read and write assertions still use the user JWT.
+
+**Contract**:
+
+- Behavior asserted: when the test finishes, a service-role read of the band ids from that test returns no rows, and those auth users are gone.
+- Regression caught: teardown is skipped, or teardown is done by mocking `listMyBands` / `createBand` so the policies are no longer executed.
+- Edge: delete memberships, then bands, then auth users. The user foreign key has no `ON DELETE CASCADE`. A missing `SUPABASE_SERVICE_ROLE_KEY` fails the test.
+- Anti-pattern avoided: passing the service-role client into `listMyBands`, `getMyBand`, or `createBand`, and pointing teardown at a hosted project.
+
+`test/band-http.test.ts` gets the same teardown in this phase if Phase 3 has added it. The HTTP assertions themselves stay in Phase 3.
+
+### Success Criteria:
+
+#### Automated Verification:
+
+- `npm test` exits 0, and after it the band ids created in that run are absent
+- `npm run lint` exits 0
+- The Phase 1 and Phase 2 assertions still fail if user B can read user A's band
+
+#### Manual Verification:
+
+- Run `npm test` twice against local Supabase and confirm the second run does not leave the first run's users or bands behind
+
+**Implementation Note**: After completing this phase and all automated verification passes, pause here for manual confirmation from the human that the manual testing was successful before proceeding to the next phase.
+
+---
+
 ## Testing Strategy
 
 ### Unit Tests:
@@ -226,7 +268,7 @@ Record how to add the next test of this kind. Leave the frozen strategy sections
 
 ### Integration Tests:
 
-- Two users against local Supabase for the read and the direct write.
+- Two users against local Supabase for the read and the direct write. The run then deletes those users, memberships, and bands.
 - Cookie HTTP against preview for the 404 and the error redirect.
 
 ### Manual Testing Steps:
@@ -241,7 +283,7 @@ The suite is a handful of auth and table calls against local Supabase. No load t
 
 ## Migration Notes
 
-No schema change. Tests create their own users and bands on each run. They do not edit `supabase/migrations/`.
+No schema change. Tests create their own users and bands on each run, then delete those rows. They do not edit `supabase/migrations/`. They do not mock the service functions.
 
 ## References
 
@@ -270,13 +312,13 @@ No schema change. Tests create their own users and bands on each run. They do no
 
 #### Automated
 
-- [x] 2.1 `npm test` exits 0 and fails if B's insert or update lets B read A's band or changes A's visible role away from owner
-- [x] 2.2 `npm test` exits 0 and fails unless empty, three-space, and 81-`a` names throw a message containing `Band name must be 1–80 characters`, while `A` and an 80-`b` name return ids
-- [x] 2.3 `npm run lint` exits 0
+- [x] 2.1 `npm test` exits 0 and fails if B's insert or update lets B read A's band or changes A's visible role away from owner — 59bc0e8
+- [x] 2.2 `npm test` exits 0 and fails unless empty, three-space, and 81-`a` names throw a message containing `Band name must be 1–80 characters`, while `A` and an 80-`b` name return ids — 59bc0e8
+- [x] 2.3 `npm run lint` exits 0 — 59bc0e8
 
 #### Manual
 
-- [x] 2.4 Re-run `npm test` with the same local Supabase as Phase 1 and confirm both new cases ran, not only the Phase 1 file
+- [x] 2.4 Re-run `npm test` with the same local Supabase as Phase 1 and confirm both new cases ran, not only the Phase 1 file — 59bc0e8
 
 ### Phase 3: HTTP mapping
 
@@ -298,3 +340,15 @@ No schema change. Tests create their own users and bands on each run. They do no
 #### Manual
 
 - [ ] 4.2 Read §6 and confirm it matches the files and scripts from Phases 1–3, and that §1–§5 are unchanged
+
+### Phase 5: Remove rows this run created
+
+#### Automated
+
+- [x] 5.1 `npm test` exits 0, and after it the band ids created in that run are absent
+- [x] 5.2 `npm run lint` exits 0
+- [x] 5.3 The Phase 1 and Phase 2 assertions still fail if user B can read user A's band
+
+#### Manual
+
+- [x] 5.4 Run `npm test` twice against local Supabase and confirm the second run does not leave the first run's users or bands behind

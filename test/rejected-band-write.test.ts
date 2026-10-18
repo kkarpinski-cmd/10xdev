@@ -1,43 +1,21 @@
-import { randomUUID } from "node:crypto";
-import { createClient } from "@supabase/supabase-js";
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 import { createBand, getMyBand, listMyBands } from "@/lib/services/bands";
+import { removeRowsThisRunCreated } from "./helpers/remove-created-rows";
+import { signInFreshUser } from "./helpers/sign-in";
 
+const EMAIL_PREFIX = "rejected-band-write-";
 const PASSWORD = "Rejected-Band-Write-Passw0rd!";
 const NAME_LENGTH_ERROR = "Band name must be 1\u201380 characters";
+const createdUserIds: string[] = [];
+const createdBandIds: string[] = [];
+
+afterEach(async () => {
+  const bandIds = createdBandIds.splice(0);
+  const userIds = createdUserIds.splice(0);
+  await removeRowsThisRunCreated({ bandIds, userIds });
+});
 
 type SignedInClient = Parameters<typeof listMyBands>[0];
-
-function requiredEnv(name: "SUPABASE_URL" | "SUPABASE_KEY"): string {
-  const value = process.env[name];
-  if (!value) {
-    throw new Error(`${name} is required`);
-  }
-  return value;
-}
-
-async function signInFreshUser(): Promise<SignedInClient> {
-  const client = createClient(requiredEnv("SUPABASE_URL"), requiredEnv("SUPABASE_KEY"), {
-    auth: {
-      persistSession: false,
-      autoRefreshToken: false,
-      detectSessionInUrl: false,
-    },
-  });
-  const email = `rejected-band-write-${randomUUID()}@example.com`;
-
-  const signedUp = await client.auth.signUp({ email, password: PASSWORD });
-  if (signedUp.error) {
-    throw new Error(signedUp.error.message);
-  }
-
-  const signedIn = await client.auth.signInWithPassword({ email, password: PASSWORD });
-  if (signedIn.error) {
-    throw new Error(signedIn.error.message);
-  }
-
-  return client;
-}
 
 async function signedInUserId(client: SignedInClient): Promise<string> {
   const currentUser = await client.auth.getUser();
@@ -52,7 +30,8 @@ async function expectNameRejected(client: SignedInClient, name: string): Promise
 
   let thrown: unknown = undefined;
   try {
-    await createBand(client, name);
+    const bandId = await createBand(client, name);
+    createdBandIds.push(bandId);
   } catch (error: unknown) {
     thrown = error;
   }
@@ -70,10 +49,11 @@ async function expectNameRejected(client: SignedInClient, name: string): Promise
 
 describe("rejected band write", () => {
   it("does not keep an owner membership written by another user", async () => {
-    const userA = await signInFreshUser();
+    const userA = await signInFreshUser(EMAIL_PREFIX, PASSWORD, createdUserIds);
     const bandAId = await createBand(userA, "Write A");
+    createdBandIds.push(bandAId);
 
-    const userB = await signInFreshUser();
+    const userB = await signInFreshUser(EMAIL_PREFIX, PASSWORD, createdUserIds);
     const userBId = await signedInUserId(userB);
 
     await userB.from("band_members").insert({
@@ -89,16 +69,18 @@ describe("rejected band write", () => {
   });
 
   it("rejects names outside 1–80 characters and accepts the edges", async () => {
-    const user = await signInFreshUser();
+    const user = await signInFreshUser(EMAIL_PREFIX, PASSWORD, createdUserIds);
 
     await expectNameRejected(user, "");
     await expectNameRejected(user, "   ");
     await expectNameRejected(user, "a".repeat(81));
 
     const shortId = await createBand(user, "A");
+    createdBandIds.push(shortId);
     expect((await getMyBand(user, shortId))?.id).toBe(shortId);
 
     const longId = await createBand(user, "b".repeat(80));
+    createdBandIds.push(longId);
     expect((await getMyBand(user, longId))?.id).toBe(longId);
   });
 });
