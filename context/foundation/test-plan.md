@@ -6,7 +6,7 @@
 >
 > Refresh: re-run `/10x-test-plan --refresh` when stale (see §8).
 >
-> Last updated: 2026-10-18
+> Last updated: 2026-10-19
 
 ## 1. Strategy
 
@@ -126,11 +126,17 @@ the relevant rollout phase ships; before that, the sub-section reads
 
 ### 6.1 Adding a unit test
 
-- TBD — see §3 Phase 3 for the draw-size and top-N rule, and §3 Phase 1 if a rejected write is a pure rule.
+- **Example:** `test/rejected-band-write.test.ts` — the name-length rule on `createBand`.
+- **Command:** `npm test` (Vitest via `vitest.config.ts`; needs local Supabase and `.env` with `SUPABASE_URL`, `SUPABASE_KEY`, and `SUPABASE_SERVICE_ROLE_KEY` for teardown).
+- **Oracle:** a rejected name throws an `Error` whose message contains `Band name must be 1–80 characters` (en dash), and no new band id is stored. Edge names `A` and an 80-character string must return ids.
+- **Do not** mock `createBand` or point at hosted Supabase — the test exists to catch RLS and the `create_band` function, not a stub.
 
 ### 6.2 Adding an integration test
 
-- TBD — see §3 Phase 1 for the other-band read denial and the rejected owner write.
+- **Example:** `test/own-band-read.test.ts` — another user's band id must not appear in `listMyBands` or `getMyBand`.
+- **Command:** `npm test`.
+- **Session:** sign up a real user against local Supabase (`test/helpers/sign-in.ts`), then call `listMyBands` / `getMyBand` with that user's JWT client. **`listMyBands` is not mocked.**
+- **Also in this rollout:** `test/rejected-band-write.test.ts` covers a direct `band_members` insert/update that must not let user B read user A's band or change A's visible role.
 
 ### 6.3 Adding an e2e test
 
@@ -138,7 +144,10 @@ the relevant rollout phase ships; before that, the sub-section reads
 
 ### 6.4 Adding a test for a new API endpoint
 
-- TBD — see §3 Phase 1 for the write-boundary refusal (self-assigned owner, rejected band or song).
+- **Example:** `test/band-http.test.ts` — write-boundary refusal through `POST /api/bands` (81-character name redirects to `/dashboard?error=` with the same raise sentence as §6.1) and another user's band page returns 404 on `GET /bands/{id}`.
+- **Command:** `npm run test:http` with `vitest.http.config.ts`. **`npm test` excludes this file** so the data suite does not require preview.
+- **Prerequisite:** build and start preview (`npm run build`, then `npm run preview`) against the same local Supabase. Set `BASE_URL` when preview is not on `http://localhost:4321`.
+- **Shape:** cookie jars and `redirect: "manual"`, like `scripts/smoke.mjs` — do not fold these checks into smoke.
 
 ### 6.5 Adding a test for a new content-build rule
 
@@ -146,7 +155,7 @@ the relevant rollout phase ships; before that, the sub-section reads
 
 ### 6.6 Per-rollout-phase notes
 
-- TBD — each phase appends a short note here when it lands.
+- **Rollout §3 Phase 1 (`testing-runner-own-band-boundary`):** policies and `create_band` are exercised against **local Supabase** only (`127.0.0.1` / `localhost`). After each data test, `test/helpers/remove-created-rows.ts` deletes memberships, bands, and auth users this run created (`SUPABASE_SERVICE_ROLE_KEY` — teardown only, never passed into band services under test). HTTP mapping (`test/band-http.test.ts`) needs a **separate preview process**; it is not part of `npm test`.
 
 ## 7. What We Deliberately Don't Test
 

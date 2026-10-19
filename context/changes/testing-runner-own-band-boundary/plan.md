@@ -324,22 +324,22 @@ No schema change. Tests create their own users and bands on each run, then delet
 
 #### Automated
 
-- [x] 3.1 `npm run test:http` exits 0 against preview and fails unless B's GET of A's band id is 404 and B's POST of an 81-`a` name redirects to `/dashboard?error=` containing `Band name must be 1–80 characters`
-- [x] 3.2 `npm test` still exits 0 and does not require preview
+- [x] 3.1 `npm run test:http` exits 0 against preview and fails unless B's GET of A's band id is 404 and B's POST of an 81-`a` name redirects to `/dashboard?error=` containing `Band name must be 1–80 characters` — 64df441
+- [x] 3.2 `npm test` still exits 0 and does not require preview — 64df441
 
 #### Manual
 
-- [ ] 3.3 Start preview on the local stack, then run `npm run test:http`, and confirm the data suite was not the process that served those HTTP requests
+- [x] 3.3 Start preview on the local stack, then run `npm run test:http`, and confirm the data suite was not the process that served those HTTP requests
 
 ### Phase 4: Cookbook
 
 #### Automated
 
-- [ ] 4.1 `context/foundation/test-plan.md` §6.1, §6.2, §6.4, and §6.6 name `test/own-band-read.test.ts`, `test/rejected-band-write.test.ts`, `test/band-http.test.ts`, `npm test`, and `npm run test:http`
+- [x] 4.1 `context/foundation/test-plan.md` §6.1, §6.2, §6.4, and §6.6 name `test/own-band-read.test.ts`, `test/rejected-band-write.test.ts`, `test/band-http.test.ts`, `npm test`, and `npm run test:http`
 
 #### Manual
 
-- [ ] 4.2 Read §6 and confirm it matches the files and scripts from Phases 1–3, and that §1–§5 are unchanged
+- [x] 4.2 Read §6 and confirm it matches the files and scripts from Phases 1–3, and that §1–§5 are unchanged
 
 ### Phase 5: Remove rows this run created
 
