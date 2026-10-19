@@ -324,8 +324,8 @@ No schema change. Tests create their own users and bands on each run, then delet
 
 #### Automated
 
-- [ ] 3.1 `npm run test:http` exits 0 against preview and fails unless B's GET of A's band id is 404 and B's POST of an 81-`a` name redirects to `/dashboard?error=` containing `Band name must be 1–80 characters`
-- [ ] 3.2 `npm test` still exits 0 and does not require preview
+- [x] 3.1 `npm run test:http` exits 0 against preview and fails unless B's GET of A's band id is 404 and B's POST of an 81-`a` name redirects to `/dashboard?error=` containing `Band name must be 1–80 characters`
+- [x] 3.2 `npm test` still exits 0 and does not require preview
 
 #### Manual
 
@@ -345,10 +345,10 @@ No schema change. Tests create their own users and bands on each run, then delet
 
 #### Automated
 
-- [x] 5.1 `npm test` exits 0, and after it the band ids created in that run are absent
-- [x] 5.2 `npm run lint` exits 0
-- [x] 5.3 The Phase 1 and Phase 2 assertions still fail if user B can read user A's band
+- [x] 5.1 `npm test` exits 0, and after it the band ids created in that run are absent — 6ac2508
+- [x] 5.2 `npm run lint` exits 0 — 6ac2508
+- [x] 5.3 The Phase 1 and Phase 2 assertions still fail if user B can read user A's band — 6ac2508
 
 #### Manual
 
-- [x] 5.4 Run `npm test` twice against local Supabase and confirm the second run does not leave the first run's users or bands behind
+- [x] 5.4 Run `npm test` twice against local Supabase and confirm the second run does not leave the first run's users or bands behind — 6ac2508
