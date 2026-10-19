@@ -1,7 +1,7 @@
 ---
 change_id: testing-runner-own-band-boundary
 title: Prove own-band visibility and rejected owner writes
-status: implementing
+status: implemented
 created: 2026-10-18
 updated: 2026-10-19
 archived_at: null
