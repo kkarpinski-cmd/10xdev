@@ -5,6 +5,7 @@
 import { randomUUID } from "node:crypto";
 import { createClient } from "@supabase/supabase-js";
 import { afterEach, describe, expect, it } from "vitest";
+import { requireLocalSupabaseUrl } from "./helpers/local-supabase-url";
 import { removeRowsThisRunCreated } from "./helpers/remove-created-rows";
 
 const BASE_URL = process.env.BASE_URL ?? "http://localhost:4321";
@@ -21,15 +22,6 @@ function requiredEnv(name: "SUPABASE_URL" | "SUPABASE_SERVICE_ROLE_KEY"): string
     throw new Error(`${name} is required`);
   }
   return value;
-}
-
-function localSupabaseUrl(): string {
-  const url = requiredEnv("SUPABASE_URL");
-  const hostname = new URL(url).hostname;
-  if (hostname !== "127.0.0.1" && hostname !== "localhost") {
-    throw new Error("Teardown must use the local Supabase URL");
-  }
-  return url;
 }
 
 function cookieHeader(jar: Map<string, string>): string {
@@ -151,7 +143,7 @@ async function signInThroughApp(jar: Map<string, string>, email: string): Promis
 afterEach(async () => {
   const bandIds = createdBandIds.splice(0);
   const emails = createdEmails.splice(0);
-  const url = localSupabaseUrl();
+  const url = requireLocalSupabaseUrl();
   const userIds = await userIdsForEmails(url, emails);
   await removeRowsThisRunCreated({ bandIds, userIds });
 }, 20_000);

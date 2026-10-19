@@ -90,12 +90,12 @@ plus the MCP/tools actually exposed in the current session. If a useful docs
 or search MCP such as Context7 or Exa.ai is not available, say that instead
 of assuming access.
 
-Test-base profile: `none`. No Vitest, Jest, or Playwright config, and no application test files. `scripts/smoke.mjs` checks the sign-in redirect. CI runs that smoke on `master`.
+Test-base profile: `vitest-local-supabase`. Vitest 5 via Astro `getViteConfig()` (`vitest.config.ts`, `npm test`); HTTP mapping uses `npm run test:http` against preview. `scripts/smoke.mjs` checks the sign-in redirect. CI runs smoke on `master`; Vitest in CI is planned in §3 Phase 5.
 
 | Layer | Tool | Version | Notes |
 |-------|------|---------|-------|
-| unit + integration | none yet — Vitest via Astro `getViteConfig()` | — | Phase 1 boots the runner. `@cloudflare/vitest-plugin` (successor of `@cloudflare/vitest-pool-workers`) only if research shows the failure needs the Workers runtime. checked: 2026-10-18 |
-| API mocking | none yet | — | Internal fixtures. Do not assert hosted Supabase. See §3 Phase 1 |
+| unit + integration | Vitest via Astro `getViteConfig()` | 5.x (see package.json) | `test/own-band-read.test.ts`, `test/rejected-band-write.test.ts`; local Supabase only. Cloudflare Vite plugins stripped so tests run in Node. `@cloudflare/vitest-plugin` only if a future test needs the Workers runtime. checked: 2026-10-19 |
+| API mocking | none | — | Real local Supabase sessions; do not assert hosted Supabase. See §6 |
 | e2e | none | — | No rollout phase |
 | accessibility | none | — | No rollout phase |
 | AI-native | none — checked: 2026-10-18 | n/a | Not used. Interview Q5 excluded visual snapshots |

@@ -1,5 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import { expect } from "vitest";
+import { requireLocalSupabaseUrl } from "./local-supabase-url";
 
 interface Database {
   public: {
@@ -71,6 +72,7 @@ function requiredEnv(name: "SUPABASE_URL" | "SUPABASE_SERVICE_ROLE_KEY"): string
 }
 
 function serviceRoleClient() {
+  requireLocalSupabaseUrl();
   return createClient<Database>(requiredEnv("SUPABASE_URL"), requiredEnv("SUPABASE_SERVICE_ROLE_KEY"), {
     auth: {
       persistSession: false,
