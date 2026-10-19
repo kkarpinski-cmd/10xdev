@@ -57,7 +57,7 @@ npm run dev
 - `npm run format` - Run Prettier
 - `npm run smoke` - Smoke test the auth flow against a running server (`BASE_URL`, defaults to `http://localhost:4321`)
 - `npm test` - Data tests against local Supabase (`test/own-band-read.test.ts`, `test/rejected-band-write.test.ts`)
-- `npm run test:http` - `test/band-http.test.ts` against a preview that is already running (`npm run preview`). `BASE_URL` defaults to `http://localhost:4321`
+- `npm run test:http` - `test/band-http.test.ts` against a preview that is already running (`npm run preview`). `BASE_URL` defaults to `http://localhost:4321` -> `BASE_URL=http://localhost:4321 npm run test:http`
 
 ## Project Structure
 
