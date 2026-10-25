@@ -4,7 +4,7 @@ JamSet helps small music bands coordinate song pools and voting rounds before re
 
 ## Agent Rules
 
-- Never commit secrets — `SUPABASE_URL` and `SUPABASE_KEY` belong in `.env` / `.dev.vars` only (see @.env.example; both are gitignored).
+- Never commit secrets — `SUPABASE_URL`, `SUPABASE_KEY`, and `SUPABASE_SERVICE_ROLE_KEY` belong in `.env` / `.dev.vars` only (see @.env.example; all are gitignored). Use the service role key only for local test teardown (`test/helpers/remove-created-rows.ts`), never in app code or assertion clients.
 - Add new authenticated routes to `PROTECTED_ROUTES` in @src/middleware.ts.
 - Add React islands only for interactivity — no Next.js `"use client"` directives.
 - Merge Tailwind classes with `cn()` from @src/lib/utils.ts; do not concatenate class strings manually.
@@ -31,7 +31,7 @@ TypeScript strict via @tsconfig.json; path alias `@/*` → `./src/*`. Match neig
 
 ## Testing
 
-No unit or e2e suite yet — only `npm run smoke`. Add application tests as JamSet features grow. CI smoke job in @.github/workflows/ci.yml builds, previews, and runs smoke on `master`.
+`npm test` runs Vitest data tests against local Supabase; `npm run test:http` needs preview (see @context/foundation/test-plan.md §6). CI still runs only `npm run smoke` on `master` until test-plan rollout Phase 5 wires Vitest.
 
 ## Commits & PRs
 
