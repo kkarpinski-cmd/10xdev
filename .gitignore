@@ -24,3 +24,6 @@ worker-configuration.d.ts
 .DS_Store
 # jetbrains setting folder
 .idea/
+
+# stryker temp files
+.stryker-tmp

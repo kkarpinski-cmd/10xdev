@@ -33,6 +33,15 @@ TypeScript strict via @tsconfig.json; path alias `@/*` → `./src/*`. Match neig
 
 `npm test` runs Vitest data tests against local Supabase; `npm run test:http` needs preview (see @context/foundation/test-plan.md §6). CI still runs only `npm run smoke` on `master` until test-plan rollout Phase 5 wires Vitest.
 
+## Mutation testing
+
+Repo uses Stryker for selective mutation testing on risk-critical modules.
+Run it only for code covered by the current change or a risk from test-plan.md,
+prefer narrowed scope with --mutate "path/to/file.ts:start-end", and do not chase
+100% mutation score. Survived mutants should be reviewed one by one: add an
+assertion only when the mutant represents a user-visible or business-relevant bug.
+
+
 ## Commits & PRs
 
 Target branch: `master`. PRs must pass CI: `npm run lint`, `npx astro check`, `npm run build` (needs `SUPABASE_URL`/`SUPABASE_KEY` secrets), plus the smoke job. Use short imperative commit messages (see recent `git log`). Node.js v22.14.0 per @.nvmrc.
